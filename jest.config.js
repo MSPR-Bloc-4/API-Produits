@@ -13,12 +13,14 @@ module.exports = {
     testMatch: ['**/__tests__/**/*.test.js'],
     collectCoverageFrom: [
         '**/*.js',
+        '!**index.js',
         '!**/node_modules/**',
         '!**/coverage/**',
         '!**/jest.config.js', 
         '!**/__tests__/**', 
       ],
       coveragePathIgnorePatterns: [
+        '/index.js',
         '/node_modules/',
         '/coverage/',
         '/jest.config.js',
