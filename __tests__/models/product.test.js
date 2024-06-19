@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
-const Product = require('../models/Product'); // Adjust the path as per your folder structure
+const Product = require('../../models/Product');
 
 let mongoServer;
 
@@ -9,10 +9,7 @@ beforeAll(async () => {
     mongoServer = await MongoMemoryServer.create();
     const mongoUri = mongoServer.getUri();
 
-    await mongoose.connect(mongoUri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    });
+    await mongoose.connect(mongoUri);
 });
 
 // Clear the database and close the connection after all tests
@@ -87,6 +84,4 @@ describe('Product Model Tests', () => {
         expect(error).toBeInstanceOf(mongoose.Error.ValidationError);
         expect(error.errors['details.price']).toBeDefined();
     });
-
-    // Add more tests as needed for other fields and scenarios
 });

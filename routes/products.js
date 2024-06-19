@@ -5,17 +5,13 @@ const Product = require('../models/Product');
 router.post('/', async (req, res) => {
     const { name, details, stock } = req.body;
     try {
-        const newProduct = new Product({
-            name,
-            details,
-            stock,
-        });
-        const savedProduct = await newProduct.save();
-        res.status(201).json(savedProduct);
+        const product = await Product.create({ name, details, stock }); // Attendre la résolution de la promesse
+        res.status(201).json({ message: 'Product created successfully' });
     } catch (error) {
-        res.status(500).json({ message: 'Failed to create product', error });
+        res.status(500).json({ message: 'Failed to create product', error: error.message });
     }
 });
+
 
 router.get('/', async (req, res) => {
     try {
@@ -51,7 +47,7 @@ router.put('/:productId', async (req, res) => {
         if (!updatedProduct) {
             return res.status(404).json({ message: 'Product not found' });
         }
-        res.status(200).json(updatedProduct);
+        res.status(200).json({ message: 'Product updated successfully' });
     } catch (error) {
         res.status(500).json({ message: 'Failed to update product', error });
     }
