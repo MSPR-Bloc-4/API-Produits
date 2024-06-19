@@ -4,13 +4,16 @@
   "description": "��#\u0000 \u0000A\u0000P\u0000I\u0000-\u0000P\u0000r\u0000o\u0000d\u0000u\u0000i\u0000t\u0000s\u0000\r\u0000 \u0000",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest --coverage --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.5.0",
+    "@types/jest": "^29.5.12",
+    "@types/mongodb-memory-server": "^2.3.0",
+    "@types/mongoose": "^5.11.97",
     "eslint": "^9.5.0",
     "globals": "^15.6.0",
     "jest": "^29.7.0",
@@ -19,8 +22,8 @@
     "supertest": "^7.0.0"
   },
   "dependencies": {
-    "express": "^4.19.2",
+    "mongoose": "^8.4.3",
     "dotenv": "^16.4.5",
-    "mongoose": "^8.4.1"
+    "express": "^4.19.2"
   }
 }
