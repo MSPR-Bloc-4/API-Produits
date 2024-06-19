@@ -29,23 +29,22 @@ const productRoutes = require('./routes/products');
 app.use('/products', productRoutes);
 
 // Démarrage du serveur
-const startServer = async () => {
+const startServer = async (port = PORT) => {
     try {
         await connectDatabase();
-        app.listen(PORT, () => {
-            console.log(`Server listening on port ${PORT}`);
+        const server = app.listen(port, () => {
+            console.log(`Server listening on port ${port}`);
         });
+        return server;
     } catch (error) {
         console.error('Error starting the server:', error.message);
         process.exit(1); // Quitte le processus Node.js en cas d'erreur au démarrage du serveur
     }
 };
 
-startServer();
-
 // Fonction pour fermer la connexion à la base de données
 const closeDatabase = async () => {
     await mongoose.connection.close();
 };
 
-module.exports = { app, connectDatabase, closeDatabase };
+module.exports = { app, connectDatabase, closeDatabase, startServer };
