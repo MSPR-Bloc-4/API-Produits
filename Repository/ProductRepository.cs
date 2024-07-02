@@ -60,4 +60,30 @@ public class ProductRepository : IProductRepository
         DocumentReference docRef = _collectionReference.Document(productId);
         await docRef.DeleteAsync();
     }
+    
+    public async Task IncrementStock(List<string> productIds)
+    {
+        foreach (var productId in productIds)
+        {
+            var product = await GetProductById(productId);
+            if (product != null)
+            {
+                product.Stock += 1;
+                await UpdateProduct(productId, product);
+            }
+        }
+    }
+    
+    public async Task DecrementStock(List<string> productIds)
+    {
+        foreach (var productId in productIds)
+        {
+            var product = await GetProductById(productId);
+            if (product != null)
+            {
+                product.Stock -= 1;
+                await UpdateProduct(productId, product);
+            }
+        }
+    }
 }

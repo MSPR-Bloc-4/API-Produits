@@ -1,8 +1,8 @@
 using Product_Api.Model;
 
-namespace Product_Api.Repository.Interface;
+namespace Product_Api.Service.Interface;
 
-public interface IProductRepository
+public interface IProductService
 {
     Task<string> CreateProduct(Product product);
     Task<Product> GetProductById(string productId);
