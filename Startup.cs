@@ -1,11 +1,11 @@
-using Client_Api.Configuration;
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Firestore;
 using Google.Cloud.Firestore.V1;
+using Product_Api.Configuration;
 using Product_Api.Repository;
 using Product_Api.Repository.Interface;
 
-namespace Client_Api
+namespace Product_Api
 {
     public class Startup
     {
@@ -27,12 +27,15 @@ namespace Client_Api
                 credential = GoogleCredential.FromStream(stream);
             }
 
-            FirestoreDb db = FirestoreDb.Create(firebaseConfig.ProjectId, new FirestoreClientBuilder
+            FirestoreDbBuilder builder = new FirestoreDbBuilder
             {
+                ProjectId = firebaseConfig.ProjectId,
+                DatabaseId = "product",
                 Credential = credential
-            }.Build());
-            
+            };
 
+            FirestoreDb db = builder.Build();
+            
             services.AddSingleton(db);
             services.AddSingleton<IProductRepository, ProductRepository>();
 
