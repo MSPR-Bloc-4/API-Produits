@@ -1,4 +1,4 @@
-﻿namespace Client_Api.Configuration;
+﻿namespace Product_Api.Configuration;
 
 public class FirebaseConfig
 {

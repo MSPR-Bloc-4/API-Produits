@@ -1,4 +1,4 @@
-namespace Client_Api;
+namespace Product_Api;
 public class Program
 {
     public static void Main(string[] args)
