@@ -21,17 +21,23 @@ namespace Product_Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var credentialPath = Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS");
-            // Configuration setup
+            GoogleCredential credential;
+            if (Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS") != null)
+            {
+                using (var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS"))))
+                {
+                    credential = GoogleCredential.FromStream(stream);
+                }
+            }
+            else
+            {
+                using (var stream = new FileStream("firebase_credentials.json", FileMode.Open, FileAccess.Read))
+                {
+                    credential = GoogleCredential.FromStream(stream);
+                }
+            }            // Configuration setup
             services.Configure<FirebaseConfig>(_configuration.GetSection("FirebaseConfig"));
             var firebaseConfig = _configuration.GetSection("FirebaseConfig").Get<FirebaseConfig>();
-
-            // Google Cloud setup
-            GoogleCredential credential;
-            using (var stream = new FileStream(credentialPath, FileMode.Open, FileAccess.Read))
-            {
-                credential = GoogleCredential.FromStream(stream);
-            }
 
             FirestoreDbBuilder builder = new FirestoreDbBuilder
             {
@@ -47,7 +53,7 @@ namespace Product_Api
             services.AddSubscriberClient(builder =>
             {
                 builder.SubscriptionName = subscriptionName;
-                builder.CredentialsPath = credentialPath;
+                builder.Credential = credential;
             });
             services.AddHostedService<SubscriberService>();
 
