@@ -1,8 +1,8 @@
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Firestore;
-using Google.Cloud.Firestore.V1;
 using Google.Cloud.PubSub.V1;
-using Product_Api.Configuration;
+using Newtonsoft.Json.Linq;
+using Product_Api.Helper;
 using Product_Api.Repository;
 using Product_Api.Repository.Interface;
 using Product_Api.Service;
@@ -21,6 +21,7 @@ namespace Product_Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var projectId = Environment.GetEnvironmentVariable("FIREBASE_PROJECTID") ?? JsonReader.GetFieldFromJsonFile("project_id");
             GoogleCredential credential;
             if (Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS") != null)
             {
@@ -35,13 +36,11 @@ namespace Product_Api
                 {
                     credential = GoogleCredential.FromStream(stream);
                 }
-            }            // Configuration setup
-            services.Configure<FirebaseConfig>(_configuration.GetSection("FirebaseConfig"));
-            var firebaseConfig = _configuration.GetSection("FirebaseConfig").Get<FirebaseConfig>();
+            }
 
             FirestoreDbBuilder builder = new FirestoreDbBuilder
             {
-                ProjectId = firebaseConfig.ProjectId,
+                ProjectId = projectId,
                 DatabaseId = "product",
                 Credential = credential
             };
@@ -49,7 +48,7 @@ namespace Product_Api
             FirestoreDb db = builder.Build();
 
             services.AddSingleton(db);
-            SubscriptionName subscriptionName = SubscriptionName.FromProjectSubscription(firebaseConfig.ProjectId, "order-sub");
+            SubscriptionName subscriptionName = SubscriptionName.FromProjectSubscription(projectId, "order-sub");
             services.AddSubscriberClient(builder =>
             {
                 builder.SubscriptionName = subscriptionName;

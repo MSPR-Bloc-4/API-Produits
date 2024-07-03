@@ -1,6 +1,7 @@
 using Google.Api.Gax;
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Firestore;
+using Product_Api.Helper;
 using Product_Api.Model;
 using Product_Api.Repository;
 using Xunit;
@@ -14,6 +15,7 @@ namespace Product_Api.Tests
 
         public ProductRepositoryTests()
         {
+            var projectId = Environment.GetEnvironmentVariable("FIREBASE_PROJECTID") ?? JsonReader.GetFieldFromJsonFile("project_id");
             GoogleCredential credential;
             if (Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS") != null)
             {
@@ -29,16 +31,11 @@ namespace Product_Api.Tests
                     credential = GoogleCredential.FromStream(stream);
                 }
             }
-            
-            // Create GoogleCredential from the JSON string
-
-            // Initialize FirestoreDb for testing
-            var projectId = "payetonkawa-84a8c";
             var builder = new FirestoreDbBuilder
             {
                 Credential = credential,
                 ProjectId = projectId,
-                DatabaseId = "test",  // Use the 'test' database for testing
+                DatabaseId = "test",
                 EmulatorDetection = EmulatorDetection.EmulatorOrProduction
             };
             _firestoreDb = builder.Build();

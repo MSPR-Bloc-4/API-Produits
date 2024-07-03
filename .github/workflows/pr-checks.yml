@@ -47,6 +47,7 @@ jobs:
       - name: Test
         env:
           FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
+          FIREBASE_PROJECTID: ${{ secrets.FIREBASE_PROJECTID }}
         run: dotnet test Product-Api.UnitTests
   
   Analysis:
