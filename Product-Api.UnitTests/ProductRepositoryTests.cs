@@ -1,7 +1,9 @@
 using Google.Api.Gax;
+using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Firestore;
 using Product_Api.Model;
 using Product_Api.Repository;
+using Xunit;
 
 namespace Product_Api.Tests
 {
@@ -12,11 +14,29 @@ namespace Product_Api.Tests
 
         public ProductRepositoryTests()
         {
+            GoogleCredential credential;
+            if (Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS") != null)
+            {
+                using (var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS"))))
+                {
+                    credential = GoogleCredential.FromStream(stream);
+                }
+            }
+            else
+            {
+                using (var stream = new FileStream("firebase_credentials.json", FileMode.Open, FileAccess.Read))
+                {
+                    credential = GoogleCredential.FromStream(stream);
+                }
+            }
+            
+            // Create GoogleCredential from the JSON string
+
             // Initialize FirestoreDb for testing
             var projectId = "payetonkawa-84a8c";
             var builder = new FirestoreDbBuilder
             {
-                CredentialsPath = "payetonkawa-84a8c-firebase-adminsdk-syfp3-6e4eaa43f5.json",
+                Credential = credential,
                 ProjectId = projectId,
                 DatabaseId = "test",  // Use the 'test' database for testing
                 EmulatorDetection = EmulatorDetection.EmulatorOrProduction

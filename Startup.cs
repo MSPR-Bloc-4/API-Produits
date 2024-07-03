@@ -21,13 +21,14 @@ namespace Product_Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var credentialPath = Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS");
             // Configuration setup
             services.Configure<FirebaseConfig>(_configuration.GetSection("FirebaseConfig"));
             var firebaseConfig = _configuration.GetSection("FirebaseConfig").Get<FirebaseConfig>();
 
             // Google Cloud setup
             GoogleCredential credential;
-            using (var stream = new FileStream(firebaseConfig.ServiceAccountPath, FileMode.Open, FileAccess.Read))
+            using (var stream = new FileStream(credentialPath, FileMode.Open, FileAccess.Read))
             {
                 credential = GoogleCredential.FromStream(stream);
             }
@@ -46,7 +47,7 @@ namespace Product_Api
             services.AddSubscriberClient(builder =>
             {
                 builder.SubscriptionName = subscriptionName;
-                builder.CredentialsPath = firebaseConfig.ServiceAccountPath;
+                builder.CredentialsPath = credentialPath;
             });
             services.AddHostedService<SubscriberService>();
 
