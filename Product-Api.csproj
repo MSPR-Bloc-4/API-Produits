@@ -5,6 +5,8 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>Product_Api</RootNamespace>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,7 +15,41 @@
         <PackageReference Include="Google.Cloud.Firestore" Version="3.8.0" />
         <PackageReference Include="Google.Cloud.PubSub.V1" Version="3.15.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.6"/>
+        <PackageReference Include="Moq" Version="4.20.70" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+        <PackageReference Include="xunit" Version="2.8.1" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.8.1">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\obj\Debug\net8.0\Product-Api.UnitTests.sourcelink.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\obj\Product-Api.UnitTests.csproj.nuget.dgspec.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\obj\project.packagespec.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\bin\Debug\net8.0\appsettings.Development.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\bin\Debug\net8.0\appsettings.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\bin\Debug\net8.0\payetonkawa-84a8c-firebase-adminsdk-syfp3-6e4eaa43f5.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.deps.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.runtimeconfig.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.UnitTests.deps.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.UnitTests.runtimeconfig.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.UnitTests\bin\Debug\net8.0\appsettings.Development.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.UnitTests\bin\Debug\net8.0\appsettings.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.UnitTests\bin\Debug\net8.0\payetonkawa-84a8c-firebase-adminsdk-syfp3-6e4eaa43f5.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.deps.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.runtimeconfig.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.UnitTests.deps.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.UnitTests.runtimeconfig.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.UnitTests\obj\Product-Api.UnitTests.csproj.nuget.dgspec.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.UnitTests\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.UnitTests\obj\project.packagespec.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.UnitTests\obj\Debug\net8.0\Product-Api.UnitTests.sourcelink.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.UnitTests\obj\Product-Api.UnitTests.csproj.nuget.dgspec.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.UnitTests\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="Product-Api.UnitTests\bin\Debug\net8.0\Product-Api.UnitTests\obj\project.packagespec.json" />
     </ItemGroup>
 
 </Project>
