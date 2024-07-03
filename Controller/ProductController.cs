@@ -1,92 +1,69 @@
 using Microsoft.AspNetCore.Mvc;
 using Product_Api.Model;
-using Product_Api.Repository.Interface;
+using Product_Api.Service.Interface;
 
-namespace Product_Api.Controller
+namespace Product_Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
-        private readonly IProductRepository _productRepository;
+        private readonly IProductService _productService;
 
-        public ProductController(IProductRepository productRepository)
+        public ProductController(IProductService productService)
         {
-            _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
+            _productService = productService;
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateProduct([FromBody] Product product)
         {
-            try
-            {
-                string productId = await _productRepository.CreateProduct(product);
-                return Ok(productId);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+            var productId = await _productService.CreateProduct(product);
+            return CreatedAtAction(nameof(GetProductById), new { productId }, productId);
         }
 
         [HttpGet("{productId}")]
-        public async Task<IActionResult> GetProduct(string productId)
+        public async Task<IActionResult> GetProductById(string productId)
         {
-            try
+            var product = await _productService.GetProductById(productId);
+            if (product == null)
             {
-                Product product = await _productRepository.GetProductById(productId);
-                if (product == null)
-                {
-                    return NotFound();
-                }
-                return Ok(product);
+                return NotFound();
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+            return Ok(product);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllProducts()
         {
-            try
-            {
-                List<Product> products = await _productRepository.GetAllProducts();
-                return Ok(products);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+            var products = await _productService.GetAllProducts();
+            return Ok(products);
         }
 
         [HttpPut("{productId}")]
         public async Task<IActionResult> UpdateProduct(string productId, [FromBody] Product updatedProduct)
         {
-            try
+            var product = await _productService.GetProductById(productId);
+            if (product == null)
             {
-                await _productRepository.UpdateProduct(productId, updatedProduct);
-                return Ok();
+                return NotFound();
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+
+            await _productService.UpdateProduct(productId, updatedProduct);
+            return NoContent();
         }
 
         [HttpDelete("{productId}")]
         public async Task<IActionResult> DeleteProduct(string productId)
         {
-            try
+            var product = await _productService.GetProductById(productId);
+            if (product == null)
             {
-                await _productRepository.DeleteProduct(productId);
-                return Ok();
+                return NotFound();
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+
+            await _productService.DeleteProduct(productId);
+            return NoContent();
         }
     }
 }
