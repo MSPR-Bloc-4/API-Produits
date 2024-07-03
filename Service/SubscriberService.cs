@@ -1,12 +1,5 @@
 using Google.Cloud.PubSub.V1;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Product_Api.Service.Interface;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
-using Product_Api.Configuration;
 
 namespace Product_Api.Service
 {
